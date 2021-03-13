@@ -1,11 +1,11 @@
 from django.shortcuts import render
+from django.contrib.auth.models import User
 from beta.models import Property, Review
 from beta.forms import ReviewForm, CustomUserCreationForm, CustomUser
 # Create your views here.
 from django.http import HttpResponse
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from gauRENTeed.middleware.login_exempt import login_exempt
-from django.contrib.auth.models import User
 from beta.token import account_activation_token
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
@@ -33,9 +33,11 @@ def reasult(request, address):
     property = Property.objects.get(address=address)
     # Get all properties
     # filter the get reviews for properties
-    print(property)
-    propertyReviews = Review.objects.filter(property=property)
-    print(propertyReviews)
+    # Order the reviews by date from oldest to newest
+
+    propertyReviews = Review.objects.filter(
+        property=property).order_by('reviewDate')
+
     context = {'property': property, 'reviews': propertyReviews}
 
     return render(request, 'tempReasult.html', context)
@@ -115,3 +117,15 @@ def activate(request, uidb64, token):
     else:
         return HttpResponse('Activation link is invalid!')
 # the list will come in from the cam module...
+
+
+@login_exempt
+def login(request):
+    # Go to payment page or decide with the group
+    # for now go to home..
+    return render(request, 'login.html')
+
+
+def logout(request):
+
+    return render(request, 'landing.html')
