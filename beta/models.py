@@ -147,3 +147,9 @@ class Review(models.Model):
 
     recomendation = models.BooleanField(default=True,
                                         help_text='Would you reccomend this property to others? ')
+
+
+class ReviewProduct(models.Model):
+    name        = models.CharField(max_length=234)
+    year        = models.CharField(max_length=4)
+    charge_id   = models.CharField(max_length=234)

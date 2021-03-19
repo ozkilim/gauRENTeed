@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from . import views
 from django.conf.urls import url
@@ -17,5 +17,10 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.activate, name='activate'),
+    path('accounts/', include('allauth.urls')),
+    path('payment_form/', views.payment_form, name='payment_form'),
+    url(r"^checkout$", views.checkout, name="checkout_page")
+
+
 
 ]
