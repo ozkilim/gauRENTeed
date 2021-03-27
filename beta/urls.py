@@ -6,7 +6,7 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('', views.landing, name='landing'),
-    path('reasult/<str:address>/', views.reasult, name='reasult'),
+    path('reasult/<str:hashId>/', views.reasult, name='reasult'),
     path('search', views.search, name='search'),
     path('searchReasult', views.searchReasult, name='searchReasult'),
     # make the link a dynamic string..

@@ -26,8 +26,10 @@ def landing(request):
     if request.method == 'POST':
         # get the searched result and redirect to correct page here
         address = request.POST.get('property')
+        property = Property.objects.get(address=address)
+        hashId = property.hashId
 
-        return redirect('reasult', address=address)
+        return redirect('reasult', hashId=hashId)
 
     if 'term' in request.GET:
         qs = Property.objects.filter(
@@ -48,9 +50,9 @@ def propertyList(request):
     return render(request, 'propertyList.html', context=context)
 
 
-def reasult(request, address):
+def reasult(request, hashId):
     # Later will need to add hashing so users cannot get to the page for free
-    property = Property.objects.get(address=address)
+    property = Property.objects.get(hashId=hashId)
     # Get all properties
     # filter the get reviews for properties
     # Order the reviews by date from oldest to newest
@@ -61,7 +63,6 @@ def reasult(request, address):
     # propertyReviews = FooForm(data=model_to_dict(Review.objects.filter(
     #     property=property).order_by('reviewDate')))
     # unpack and rebuild the feilds to display her later on so all automated..
-    print(propertyReviews)
     context = {'property': property, 'reviews': propertyReviews}
 
     return render(request, 'tempReasult.html', context)
@@ -86,6 +87,9 @@ def review(request):
             # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
             # book_instance.due_back = form.cleaned_data['renewal_date']
             form.save()
+            # go back to home page
+            return redirect('landing')
+
     context = {"form": form}
 
     return render(request, 'tempReview.html', context=context)

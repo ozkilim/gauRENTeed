@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.template.defaultfilters import slugify
 # from django.contrib.auth.models import User
@@ -5,11 +6,20 @@ from django.urls import reverse
 from django.forms import ModelForm
 from django import forms
 
+import os
+import time
+import hashlib
+from os import path
+from binascii import hexlify
+from django.db import models
+from django.contrib import admin
+from django.core.files.storage import FileSystemStorage
+import hashlib
+import random
+import uuid
 
-# The landlord adds the property here...WOuld we wnt to seed ourselves..?to start..
 
 # These are the objective facts about the property nearest station is added by us?... with logic..with google map api
-from django.contrib.auth.models import AbstractUser
 
 
 # Create your models here.
@@ -21,7 +31,8 @@ class CustomUser(AbstractUser):
 
 
 class Property(models.Model):
-    address = models.CharField(max_length=255)
+    address = models.CharField(unique=True, max_length=255)
+    hashId = models.UUIDField(default=uuid.uuid4, editable=False)
     rent = models.IntegerField()
     size = models.IntegerField()
     buildDate = models.DateTimeField(auto_now_add=True)
@@ -150,6 +161,6 @@ class Review(models.Model):
 
 
 class ReviewProduct(models.Model):
-    name        = models.CharField(max_length=234)
-    year        = models.CharField(max_length=4)
-    charge_id   = models.CharField(max_length=234)
+    name = models.CharField(max_length=234)
+    year = models.CharField(max_length=4)
+    charge_id = models.CharField(max_length=234)

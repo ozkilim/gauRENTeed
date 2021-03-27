@@ -41,23 +41,26 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a class="navbar-brand" href="#">gauRENTeed</a>
+            <a class="navbar-brand" href="{% url 'landing' %}">gauRENTeed</a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{% url 'search' %}">search <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Search</a>
+                    <a class="nav-link" href="{% url 'review' %}">review</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Review</a>
+                    <a class="nav-link" href="{% url 'login' %}">login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">signup</a>
                 </li>
 
             </ul>
-            <form class="form-inline my-2 my-lg-0">
+            <!-- <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            </form> -->
         </div>
     </nav>
 
@@ -76,6 +79,8 @@
         <div class="col">
         </div>
     </div>
+    <br>
+    <br>
     <br>
     <!-- make this sent to bottom of page.. -->
     <div class="navbarbottom">

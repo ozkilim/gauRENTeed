@@ -15,7 +15,7 @@
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Check out your next rented property</h5>
+        <h5 class="card-title">Check if your next property has been reviewed</h5>
         <p class="card-text"></p>
         <form action={% url 'landing' %} method="post">{% csrf_token %}
           <input type="text" placeholder="Search.." id='property' name='property'>
