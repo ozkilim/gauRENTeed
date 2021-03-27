@@ -42,6 +42,8 @@ class Property(models.Model):
 
 
 class Review(models.Model):
+
+    verified = models.BooleanField(default=False)
     consent = models.BooleanField(default=True,
                                   help_text='Are you happy for us to anonymously upload your review to our property review site? Your review will be anonymised')
 

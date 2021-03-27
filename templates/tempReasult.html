@@ -20,13 +20,9 @@
     <li class="nav-item">
 
         <!-- find way to make newest tab active at start.. -->
-        {% if forloop.counter == 1 %}
-        <a class="nav-link active" id={{review}} data-toggle="pill" href=#{{review.moveIn}} role="tab"
-            aria-controls={{review.moveIn}} aria-selected="true">{{review.moveIn}} - {{review.moveOut}}</a>
-        {% else %}
+  
         <a class="nav-link" id={{review}} data-toggle="pill" href=#{{review.moveIn}} role="tab"
             aria-controls={{review.moveIn}} aria-selected="true">{{review.moveIn}} - {{review.moveOut}}</a>
-        {% endif %}
 
     </li>
     {% endfor %}
@@ -34,7 +30,6 @@
 
 <div class="tab-content" id="pills-tabContent">
     {% for review in reviews %}
-    {% if forloop.counter == 1 %}
     <div class="tab-pane fade" id={{review.moveIn}} role="tabpanel" aria-labelledby={{review.moveIn}}>
         <ul>
             {% for key, value in review.items %}
@@ -43,19 +38,6 @@
             {% endfor %}
         </ul>
     </div>
-    {% else %}
-    <h1>"here"</h1>
-    <div class="tab-pane fade" id={{review.moveIn}} role="tabpanel" aria-labelledby={{review.moveIn}}>
-        <ul>
-            {% for key, value in review.items %}
-            <ul><b>{{ key }}:</b> {{ value }}
-            </ul>
-            {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
-
-
  
     {% endfor %}
 

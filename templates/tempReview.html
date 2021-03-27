@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h1>leave a review to help others understand what they are in for when renting </h1>
 <form action="/beta/review" method="post">
     {% csrf_token %}
     {{ form.as_p }}

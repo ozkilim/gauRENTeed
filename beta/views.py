@@ -56,13 +56,10 @@ def reasult(request, hashId):
     # Get all properties
     # filter the get reviews for properties
     # Order the reviews by date from oldest to newest
-
+    # Only display verified reviews....
     propertyReviews = Review.objects.filter(
-        property=property).order_by('reviewDate').values()
+        property=property, verified=True).order_by('reviewDate').values()
 
-    # propertyReviews = FooForm(data=model_to_dict(Review.objects.filter(
-    #     property=property).order_by('reviewDate')))
-    # unpack and rebuild the feilds to display her later on so all automated..
     context = {'property': property, 'reviews': propertyReviews}
 
     return render(request, 'tempReasult.html', context)
