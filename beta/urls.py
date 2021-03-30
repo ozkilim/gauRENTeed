@@ -7,7 +7,7 @@ from django.conf.urls import url
 urlpatterns = [
     path('', views.landing, name='landing'),
     path('reasult/<str:hashId>/', views.reasult, name='reasult'),
-    path('search', views.search, name='search'),
+    # path('search', views.search, name='search'),
     path('searchReasult', views.searchReasult, name='searchReasult'),
     # make the link a dynamic string..
     path('review', views.review, name='review'),
@@ -20,7 +20,4 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('payment_form/', views.payment_form, name='payment_form'),
     url(r"^checkout$", views.checkout, name="checkout_page")
-
-
-
 ]

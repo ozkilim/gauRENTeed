@@ -3,7 +3,7 @@ from jinja2 import *
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from beta.models import Property, Review, ReviewProduct
-from beta.forms import ReviewForm, CustomUserCreationForm, CustomUser
+from beta.forms import ReviewForm, CustomUserCreationForm, CustomUser, PropertyCreationForm
 # Create your views here.
 from gauRENTeed import settings
 from django.http import HttpResponse
@@ -25,19 +25,18 @@ def landing(request):
 
     if request.method == 'POST':
         # get the searched result and redirect to correct page here
-        address = request.POST.get('property')
-        property = Property.objects.get(address=address)
+        fullAddress = request.POST.get('property')
+        property = Property.objects.get(fullAddress=fullAddress)
         hashId = property.hashId
-
         return redirect('reasult', hashId=hashId)
 
     if 'term' in request.GET:
         qs = Property.objects.filter(
-            address__istartswith=request.GET.get('term'))
-        addresses = []
+            fullAddress__icontains=request.GET.get('term'))
+        fullAddress = []
         for property in qs:
-            addresses.append(property.address)
-        return JsonResponse(addresses, safe=False)
+            fullAddress.append(property.fullAddress)
+        return JsonResponse(fullAddress, safe=False)
 
     return render(request, 'landing.html')
 
@@ -72,22 +71,44 @@ def searchReasult(request):
 
 def review(request):
     # Get current reviews object
-    reviews = Review.objects.all()
+
+    propertyForm = PropertyCreationForm(request.POST)
     form = ReviewForm(request.POST)
 
+    # CHANGE LOGIC FOR FULL ADRESS NOW!
+
     if request.method == 'POST':
-        # Create a form instance and populate it with data from the request (binding):
-        # Check if the form is valid:
-        print(form.errors)
+
+        # Not best code as validation actuly fails when object already exists to is used as the check itself..
+        if propertyForm.is_valid():
+            # check if prprty object exists in our db
+            address = propertyForm.cleaned_data['address']
+            aptNumber = propertyForm.cleaned_data['aptNumber']
+            addressCheck = Property.objects.filter(
+                address=address, aptNumber=aptNumber).first()
+            if not addressCheck:
+                # search for this specific appt and address is in db
+                addressCheck = propertyForm.save()
+
+        print(propertyForm.errors)
+
         if form.is_valid():
+            # set the review to be set onto the existing or created property
+            # This NOT CHANGING VALUE!!!
+            newReview = form.save(commit=False)
+            newReview.property = addressCheck
+            # THIS IS NOT AN  INSTANCE>>>
             # Not saving the review currently to back end....
             # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
             # book_instance.due_back = form.cleaned_data['renewal_date']
-            form.save()
+            newReview.save()
+            # add the property to the review
+            # get the object
+
             # go back to home page
             return redirect('landing')
 
-    context = {"form": form}
+    context = {"form": form, "propertyForm": propertyForm}
 
     return render(request, 'tempReview.html', context=context)
 

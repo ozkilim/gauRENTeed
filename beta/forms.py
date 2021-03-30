@@ -4,7 +4,7 @@ from django.http import request
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
 # import GeeksModel from models.py
-from .models import Review
+from .models import Review, Property
 
 
 class DateInput(forms.DateInput):
@@ -15,16 +15,41 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = '__all__'
+        exclude = ('verified', 'property',)
         widgets = {
             'moveIn': DateInput(),
             'moveOut': DateInput(),
-
         }
+
+        def clean(self):
+            cleaned_data = super().clean()
+            start_date = cleaned_data.get("moveIn")
+            end_date = cleaned_data.get("moveOut")
+            if end_date < start_date:
+                raise forms.ValidationError(
+                    "End date should be later than start date.")
 
     # def __init__(self, *args, **kwargs):
     #     super(ReviewForm, self).__init__(*args, **kwargs)
     #     self.fields['moveIn'].widget = widgets.AdminDateWidget()
     #     self.fields['moveOut'].widget = widgets.AdminDateWidget()
+
+
+class PropertyCreationForm(forms.ModelForm):
+    class Meta:
+
+        # here use google api input for property finding then house or appartment fields...
+
+        model = Property
+        fields = '__all__'
+        exclude = ('fullAddress',)
+
+        # make the appt number only changable  when
+        # widgets = {
+        #     'moveIn': DateInput(),
+        #     'moveOut': DateInput(),
+
+        # }
 
 
 class CustomUserCreationForm(UserCreationForm):

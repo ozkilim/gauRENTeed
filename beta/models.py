@@ -31,14 +31,27 @@ class CustomUser(AbstractUser):
 
 
 class Property(models.Model):
-    address = models.CharField(unique=True, max_length=255)
+    # generate the full from other fields
+    fullAddress = models.CharField(
+        unique=True, max_length=255, default="", blank=True)
+
+    address = models.CharField(unique=False, max_length=255)
+
+    PROPERTY_TYPE_CHOICES = [
+        ("house", "house"), ("flat", "flat"), ("other", "other")]
+
+    propertyType = models.CharField(
+        choices=PROPERTY_TYPE_CHOICES, default="flat", help_text='Is the property a house or flat?', max_length=255)
+
+    aptNumber = models.PositiveIntegerField(default=0)
     hashId = models.UUIDField(default=uuid.uuid4, editable=False)
-    rent = models.IntegerField()
-    size = models.IntegerField()
-    buildDate = models.DateTimeField(auto_now_add=True)
-    # add usefull but objective info
-    livingNumber = models.IntegerField()
-    nearestStation = models.TextField()
+
+    def __str__(self):
+        return self.fullAddress
+
+    def save(self, *args, **kwargs):
+        self.fullAddress = self.address + "_" + str(self.aptNumber)
+        super(Property, self).save(*args, **kwargs)
 
 
 class Review(models.Model):
@@ -160,6 +173,9 @@ class Review(models.Model):
 
     recomendation = models.BooleanField(default=True,
                                         help_text='Would you reccomend this property to others? ')
+
+    def __str__(self):
+        return self.firstName + " " + self.property.fullAddress + " review"
 
 
 class ReviewProduct(models.Model):
