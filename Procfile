@@ -1,1 +1,3 @@
-web: gunicorn djangoherokuapp.wsgi --log-file -
+
+web: gunicorn locallibrary.wsgi --log-file -
+
