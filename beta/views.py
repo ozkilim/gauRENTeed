@@ -59,7 +59,15 @@ def reasult(request, hashId):
     propertyReviews = Review.objects.filter(
         property=property, verified=True).order_by('reviewDate').values()
 
-    context = {'property': property, 'reviews': propertyReviews}
+    if not propertyReviews:
+        aggregateReview = ""
+    else:
+        allReviewList = [
+            property["overallRating"] for property in propertyReviews]
+        aggregateReview = sum(allReviewList)/len(allReviewList)
+
+    context = {'property': property, 'reviews': propertyReviews,
+               'aggregateReview': aggregateReview}
 
     return render(request, 'tempReasult.html', context)
 
