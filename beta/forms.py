@@ -21,13 +21,18 @@ class ReviewForm(forms.ModelForm):
             'moveOut': DateInput(),
         }
 
-        def clean(self):
-            cleaned_data = super().clean()
-            start_date = cleaned_data.get("moveIn")
-            end_date = cleaned_data.get("moveOut")
+    def clean(self):
+        # not working currently.
+        cleaned_data = super(ReviewForm, self).clean()
+        start_date = cleaned_data.get("moveIn")
+        end_date = cleaned_data.get("moveOut")
+        if start_date and end_date:
             if end_date < start_date:
+                print("hereerror")
                 raise forms.ValidationError(
                     "End date should be later than start date.")
+                return cleaned_data
+        # return cleaned_data
 
     # def __init__(self, *args, **kwargs):
     #     super(ReviewForm, self).__init__(*args, **kwargs)
