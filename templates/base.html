@@ -36,7 +36,6 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a class="navbar-brand" href="{% url 'landing' %}">gauRENTeed</a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                
                 <li class="nav-item">
@@ -53,13 +52,12 @@
         </div>
     </nav>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div>
-        </div>
-    </nav>
+  
 
-    <div class = "gauRENTeedBlock">
+    <div class = "gauRENTeedBlock" >
+        <a href="{% url 'landing' %}">
         <img id="u83_img" class="img" src={% static "images/search/u8.png" %} />
+    </a>
     </div>
     <br>
     <!-- paage rendered here -->

@@ -12,9 +12,13 @@
 }
 
 .img {
-  max-width: 20%;
+  max-width: 15%;
   height: auto;
 }
 .gauRENTeedBlock {
   background-color: #4affad;
+}
+.navbar {
+  background-color: white;
+  color: black !important;
 }

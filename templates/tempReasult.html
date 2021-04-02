@@ -6,18 +6,19 @@
 {% block content %}
 
 
-<div class ="adressDisplayDiv"><h1>Review timeline for {{property.address}}!</h1></div>
+<div class ="adressDisplayDiv"><h3>Review timeline for {{property.address}}!</h3></div>
 <br>
 <hr>
 
-<div class ="aggregateValueDiv"><h2>Overall rating/5 : {{aggregateReview}}</h2>
+<div class ="aggregateValueDiv"><h4>Overall rating/5 : {{aggregateReview}}</h4>
 </div>
 <hr>
 
-<h2>Review Timeline</h2>
+<h4>Review Timeline</h4>
+<img id="u250_img" class="img" src={% static "images/onereasult/u250.png" %} />
+
 
 <h3>Click on a review to see what past tennants thaught</h3>
-
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 
     {% for review in reviews %}
