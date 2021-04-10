@@ -1,4 +1,4 @@
-﻿.adressDisplayDiv {
+﻿.aggregateValueDiv {
   /* border: 5px outset red; */
   background-color: #ffe6e6;
   text-align: center;
@@ -6,9 +6,15 @@
   padding: 20px;
 }
 
-.aggregateValueDiv {
-  /* border: 5px outset red; */
+#validationOfReview {
   background-color: #ffe6e6;
+  text-align: center;
+  border-radius: 25px;
+  padding: 20px;
+}
+
+#propertyDetails {
+  background-color: cadetblue;
   text-align: center;
   border-radius: 25px;
   padding: 20px;

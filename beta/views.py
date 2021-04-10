@@ -9,7 +9,7 @@ from gauRENTeed import settings
 from django.http import HttpResponse
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from gauRENTeed.middleware.login_exempt import login_exempt
-from beta.token import account_activation_token
+from beta.tokens import account_activation_token
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
@@ -19,6 +19,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core import serializers
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
+from formtools.wizard.views import SessionWizardView
 
 
 def landing(request):
@@ -137,6 +138,7 @@ def signup(request):
             '''hashing process here to give link'''
             current_site = get_current_site(request)
             mail_subject = 'Activate your account.'
+            # fail here....
             message = render_to_string('acc_active_email.html', {
                 'user': user,
                 'domain': current_site.domain,
@@ -144,10 +146,12 @@ def signup(request):
                 'token': account_activation_token.make_token(user),
             })
             to_email = form.cleaned_data.get('email')
+
             email = EmailMessage(
                 mail_subject, message, to=[to_email]
             )
             email.send()
+
             return render(request, 'confirm.html'
                           )  # should redirect to dead end page until user confirms email
     else:
@@ -167,7 +171,7 @@ def activate(request, uidb64, token):
         user.save()
         login(request, user)
         # flash message saying thanks
-        return redirect('foodshow:index')
+        return redirect('landing')
     else:
         return HttpResponse('Activation link is invalid!')
 # the list will come in from the cam module...
@@ -197,8 +201,8 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def checkout(request):
 
     review_purchased = ReviewProduct(
-        model="Honda Civic",
-        year=2017
+        name="a review ",
+        year="10"
     )
 
     if request.method == "POST":
@@ -206,19 +210,30 @@ def checkout(request):
 
     try:
         charge = stripe.Charge.create(
-            amount=2000,
-            currency="usd",
+            amount=200,
+            currency="gbp",
             source=token,
             description="The product charged to the user"
         )
-
         review_purchased.charge_id = charge.id
 
     except stripe.error.CardError as ce:
+        print(ce)
         return False, ce
 
     else:
         review_purchased.save()
-        return redirect("thank_you_page")
+        # redirect to the review that was requested
+        return redirect("landing")
         # The payment was successfully processed, the user's card was charged.
         # You can now redirect the user to another page or whatever you want
+
+
+class FormWizardView(SessionWizardView):
+    template_name = "wizardReview"
+    form_list = [ReviewForm, PropertyCreationForm]
+
+    def done(self, form_list):
+        return render(self.request, 'wizardReview.html', {
+            'form_data': [form.cleaned_data for form in form_list],
+        })

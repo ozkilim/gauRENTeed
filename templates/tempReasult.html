@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load myfilters %}
 {% load static %}
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/searchreasult.css' %}">
@@ -6,18 +7,13 @@
 {% block content %}
 
 
-<div class ="adressDisplayDiv"><h3>Review timeline for {{property.address}}!</h3></div>
-<br>
-<hr>
-
-<div class ="aggregateValueDiv"><h4>Overall rating/5 : {{aggregateReview}}</h4>
+<div class ="aggregateValueDiv"><h4>Review timeline for {{property.address}}</h4> <h5>Overall rating/5 : {{aggregateReview}}</h5>
 </div>
 <hr>
 
+
 <h4>Review Timeline</h4>
 <img id="u250_img" class="img" src={% static "images/onereasult/u250.png" %} />
-
-
 <h3>Click on a review to see what past tennants thaught</h3>
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 
@@ -33,22 +29,118 @@
 
 <div class="tab-content" id="pills-tabContent">
     {% for review in reviews %}
-    <div class="tab-pane fade" id={{review.id}} role="tabpanel" aria-labelledby={{review.id}}>
-        <ul class="list-group">
-            {% for key, value in review.items %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                {{ key }}
-              <span class="badge badge-primary badge-pill">{{ value }}</span>
-            </li>
-            {% endfor %}
-        </ul>
+    <div class="tab-pane" id={{review.id}} role="tabpanel" aria-labelledby={{review.id}}>
+
+            <div class = "overallRating">
+                <h3>Overall rating is {{ review.overallRating }}</h3>
+                {% for i in review.overallRating|times %}
+                <img src="{% static "images/search_results/u53.png" %}" class="Rating--Star Rating--Star__active">
+
+                {% endfor %}
+
+                {% for i in review.overallRating|leftover %}
+                    <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star Rating--Star__active">
+                {% endfor %}
+            </div>      
+        <div id="validationOfReview">
+            <div class = "firstName">
+                <h3>First name of reviewer: {{ review.firstName }}</h3>
+            </div>
+            <div class = "reviewDate">
+                <h3> Date of review: {{ review.reviewDate }}</h3>
+            </div>
+            <div class = "verified">
+                <h3>Verified review: {{ review.verified }}</h3>
+            </div>
+            <div class = "livingConfirmation">
+                <h3> Confirmation of tennant living at this id_address: {{ review.livingConfirmation }}</h3>
+            </div>
+            <div class = "occupation">
+                <h3>{{ review.occupation }}</h3>
+            </div>
+        </div>
+        <div id = "propertyDetails">
+            <div class = "rent">
+                <h3>{{ review.rent }} $ per month</h3>
+            </div>
+            <div class= "bedroomNumber">
+                <h3>{{ review.bedroomNumber }} bedrooms</h3>
+            </div>
+        </div>    
+ 
+
+            <div class = "overallMaintainance">
+                <h3>{{ review.overallMaintainance }}</h3>
+            </div>            
+            <div class = "buildingQuality">
+                <h3>{{ review.buildingQuality }}</h3>
+            </div>            
+            <div class = "furnishings">
+                <h3>{{ review.furnishings }}</h3>
+            </div>            
+            <div class = "water">
+                <h3>{{ review.water }}</h3>
+            </div>            
+            <div class = "whiteGoods">
+                <h3>{{ review.whiteGoods }}</h3>
+            </div>            
+            <div class = "maintainanceComment">
+                <h3>{{ review.maintainanceComment }}</h3>
+            </div>
+            <div class = "overallLandlord">
+                <h3>{{ review.overallLandlord }}</h3>
+            </div>
+            <div class = "responsiveness">
+                <h3>{{ review.responsiveness }}</h3>
+            </div>
+            <div class = "repairQuality">
+                <h3>{{ review.repairQuality }}</h3>
+            </div>
+            <div class = "movingInExperiance">
+                <h3>{{ review.movingInExperiance }}</h3>
+            </div>
+
+            <div class = "moveIn">
+                <h3>{{ review.moveIn }}</h3>
+            </div>
+            <div class = "movingOutExperiance">
+                <h3>{{ review.movingOutExperiance }}</h3>
+            </div>
+            <div class = "moveOut">
+                <h3>{{ review.moveOut }}</h3>
+            </div>
+            <div class = "landlordComment">
+                <h3>{{ review.landlordComment }}</h3>
+            </div>
+            <div class = "valueForMoney">
+                <h3>{{ review.valueForMoney }}</h3>
+            </div>
+            <div class = "areaSafety">
+                <h3>{{ review.areaSafety }}</h3>
+            </div>
+            <div class = "areaEnjoyment">
+                <h3>{{ review.areaEnjoyment }}</h3>
+            </div>
+            <div class = "areaEnjoymentReason">
+                <h3>{{ review.areaEnjoymentReason }}</h3>
+            </div>
+            <div class = "recomendation">
+                <h3>{{ review.recomendation }}</h3>
+            </div>
+
     </div>
  
     {% endfor %}
 
 
 </div>
+
+
 {% endblock %}
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>

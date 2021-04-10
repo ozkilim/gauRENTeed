@@ -19,5 +19,9 @@ urlpatterns = [
         views.activate, name='activate'),
     path('accounts/', include('allauth.urls')),
     path('payment_form/', views.payment_form, name='payment_form'),
-    url(r"^checkout$", views.checkout, name="checkout_page")
+    url('payment_form/checkout', views.checkout, name="checkout_page"),
+
+    path('FormWizardView', views.FormWizardView, name='FormWizardView'),
+
+
 ]

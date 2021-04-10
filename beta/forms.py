@@ -34,10 +34,6 @@ class ReviewForm(forms.ModelForm):
                 return cleaned_data
         # return cleaned_data
 
-    # def __init__(self, *args, **kwargs):
-    #     super(ReviewForm, self).__init__(*args, **kwargs)
-    #     self.fields['moveIn'].widget = widgets.AdminDateWidget()
-    #     self.fields['moveOut'].widget = widgets.AdminDateWidget()
 
 
 class PropertyCreationForm(forms.ModelForm):

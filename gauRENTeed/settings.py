@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'django.contrib.sites',
+    'formtools',
+
 ]
 
 MIDDLEWARE = [
@@ -176,7 +178,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-SITE_ID = 2
+SITE_ID = 3
 # send to payment page...
 LOGIN_REDIRECT_URL = '/beta'
 LOGOUT_REDIRECT_URL = '/beta'
@@ -189,7 +191,6 @@ STRIPE_SECRET_KEY = "sk_test_51IVE74GfxvWHpljQlqJi6BDKyBunvW9gxnF8NCFAc1RfoNsOmt
 #  Add configuration for static files storage using whitenoise
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
 # Heroku: Update database configuration from $DATABASE_URL.
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
@@ -199,3 +200,12 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # The URL to use when referring to static files (where they will be served from)
 STATIC_URL = '/static/'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'fridgeflipapp@gmail.com'
+EMAIL_HOST_PASSWORD = 'fridgeflipadmin'
+EMAIL_USE_TLS = True
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+# LOGIN_REDIRECT_URL = 'landing'
+# LOGOUT_REDIRECT_URL = 'landing'
