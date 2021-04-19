@@ -37,6 +37,9 @@ def landing(request):
         fullAddress = []
         for property in qs:
             fullAddress.append(property.fullAddress)
+        # return sorry if the reasult if not found
+        if fullAddress == []:
+            fullAddress = ["Sorry we don't have a review of this property yet"]
         return JsonResponse(fullAddress, safe=False)
 
     return render(request, 'landing.html')

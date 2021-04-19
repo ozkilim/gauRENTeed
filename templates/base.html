@@ -30,9 +30,25 @@
 </head>
 
 <body>
+<!-- </div>
+<div class = "gauRENTeedBlock" >
+<a href="{% url 'landing' %}">
+<img id="u83_img" class="img" src={% static "images/search/u8.png" %} />
+</a>
+</div> -->
     <div class="topnav">
+            <a href="{% url 'landing' %}">
+                <img class="logo" src={% static "images/landing/logo.png" %} />
+            </a>
+                <h6 class="nav-item">
+                    <a class="nav-link" href="{% url 'landing' %}">Search</a>
+                </h6>
                 <h6 class="nav-item">
                     <a class="nav-link" href="{% url 'review' %}">Review</a>
+                </h6>
+
+                <h6 class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">Signup</a>
                 </h6>
                 {% if user.is_authenticated %}
                 <h6 class="nav-item">
@@ -47,16 +63,9 @@
                 </h6>
                 {% endif %}
 
-                <h6 class="nav-item">
-                    <a class="nav-link" href="{% url 'signup' %}">Signup</a>
-                </h6>
 
     </div>
-    <div class = "gauRENTeedBlock" >
-        <a href="{% url 'landing' %}">
-        <img id="u83_img" class="img" src={% static "images/search/u8.png" %} />
-    </a>
-    </div>
+
     <br>
     <!-- paage rendered here -->
     <div class="row">
@@ -80,7 +89,6 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <a class="navbar-brand" href="#">gauRENTeed</a>
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -95,7 +103,7 @@
 
             </div>
         </nav>
-    </div>
+
 
 </body>
 

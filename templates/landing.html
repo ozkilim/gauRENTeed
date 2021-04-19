@@ -1,54 +1,69 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/landing.css' %}">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/landing.css' %}">
 {% endblock %}
 
 {% block content %}
+<br>    
+<br>
+<br>
+<br>
+<div class="landingback">
+<div class="row" >
+  <div class="col-4">
+        <h1 class ="landingTitle">gauRENTeed</h1>
+    <br>
+    <br>
+    <h2>See what <span class='boldLiving'>living</span> in your new home is going to be like.</h2>
+<br>
 
-<img id="u83_img" class="img " src={% static "images/landing/u380.png" %} />
-<h1>See what living in your new home is going to be like</h1>
-<div class="row">
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Check if your next property has been reviewed</h5>
-        <p class="card-text"></p>
-        <form action={% url 'landing' %} method="post">{% csrf_token %}
-          <input type="text" placeholder="Search.." id='property' name='property'>
-        </form>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Review your property to help others</h5>
-        <p class="card-text"></p>
-        <a href="{% url 'review' %}" class="btn btn-primary">Review</a>
+            <!-- <h4 class="card-title">Find it!</h4> -->
+            <form action={% url 'landing' %} method="post" id="rearchForm">{% csrf_token %}
+              <input type="text" placeholder="Look up the address" id='property' name='property'>
+              <button type="submit" class="landingButton" form="rearchForm" value="Submit">Check!</button>
+            </form>
 
       </div>
+      <div class="col-8">
+
+        <img class="u83_img" src={% static "images/landing/u380.png" %} />
+        
+      </div>
     </div>
+    <br>
+    <br>
+    <br>
+    <br>    <br>
+    <br>    <br>
+
+    
+    <!-- <h1>Renting is a big descision!</h1>
+    
+    <h1>The mission of our team is to ensure you know all the details about your future home</h1>
+    
+     -->
+    
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+    <script>
+      $(function () {
+        $("#property").autocomplete({
+          source: '{% url 'landing' %}'
+        });
+      });
+    </script>
+
+
+
   </div>
+
 </div>
-
-<h1>Renting is a big descision!</h1>
-
-<h1>The mission of our team is to ensure you know all the details about your future home</h1>
+</div>
+  
 
 
-
-
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<script>
-  $(function () {
-
-    $("#property").autocomplete({
-      source: '{% url 'landing' %}'
-    });
-  });
-</script>
 {% endblock %}

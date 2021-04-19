@@ -1,54 +1,128 @@
 ﻿.aggregateValueDiv {
   /* border: 5px outset red; */
-  background-color: #ffe6e6;
-  text-align: center;
-  border-radius: 25px;
-  padding: 20px;
-}
-
-#validationOfReview {
-  background-color: #ffe6e6;
+  background-color: rgb(255, 221, 243);
   text-align: center;
   border-radius: 25px;
   padding: 20px;
 }
 
 #overallDetials {
-  background-color: cornflowerblue;
+  background-color: rgb(217, 228, 249);
   text-align: center;
   border-radius: 25px;
   padding: 20px;
+  width: 280px;
+  height: 350px;
+  border-right: 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  float: left;
+  overflow: hidden;
 }
-#propertyDetails {
-  background-color: cadetblue;
+#overallDetials:hover {
+  box-shadow: 2px 0 10px -2px #888;
+}
+
+#validationOfReview {
+  background-color: #f9e9e9;
   text-align: center;
   border-radius: 25px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+
+  width: 280px;
+  height: 350px;
+  float: left;
+  overflow: hidden;
+}
+#validationOfReview:hover {
+  box-shadow: 2px 0 10px -2px #888;
+}
+
+#propertyDetails {
+  background-color: rgb(209, 253, 255);
+  border-radius: 25px;
   padding: 20px;
+  text-align: center;
+  width: 280px;
+  height: 350px;
+  border-right: 10px;
+  margin-bottom: 5px;
+
+  margin-right: 5px;
+  float: left;
+  overflow: hidden;
+}
+#propertyDetails:hover {
+  box-shadow: 2px 0 10px -2px #888;
 }
 
 #maintainanceDetails {
-  background-color: aquamarine;
-  text-align: center;
+  background-color: rgb(196, 254, 235);
   border-radius: 25px;
   padding: 20px;
+  text-align: center;
+  width: 280px;
+  height: 520px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border-right: 10px;
+  float: left;
+  overflow: hidden;
+}
+#maintainanceDetails:hover {
+  box-shadow: 2px 0 10px -2px #888;
 }
 #landlordDetails {
-  background-color: purple;
-  text-align: center;
+  background-color: rgb(255, 198, 255);
   border-radius: 25px;
   padding: 20px;
+  text-align: center;
+  margin-right: 5px;
+  margin-bottom: 5px;
+
+  width: 280px;
+  height: 400px;
+  border-right: 10px;
+  float: left;
+  overflow: hidden;
 }
+
+#landlordDetails:hover {
+  box-shadow: 2px 0 10px -2px #888;
+}
+
 #movingDetails {
-  background-color: burlywood;
-  text-align: center;
+  background-color: rgb(249, 230, 205);
   border-radius: 25px;
   padding: 20px;
+  text-align: center;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  width: 280px;
+  height: 400px;
+  border-right: 10px;
+  float: left;
+  overflow: hidden;
+}
+#movingDetails:hover {
+  box-shadow: 2px 0 10px -2px #888;
 }
 #areaDetails {
-  background-color: gold;
-  text-align: center;
+  background-color: rgb(255, 247, 203);
   border-radius: 25px;
   padding: 20px;
+  text-align: center;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  width: 280px;
+  height: 350px;
+  border-right: 10px;
+  float: left;
+  overflow: hidden;
+}
+#areaDetails:hover {
+  box-shadow: 2px 0 10px -2px #888;
 }
 
 .Rating--Star {
@@ -58,8 +132,16 @@
 }
 
 .u250_img {
-  max-width: 100%;
+  max-width: 60%;
   height: auto;
+  border-radius: 10px;
+}
+
+.u251_img {
+  max-width: 20%;
+  height: auto;
+  border-radius: 10px;
+  float: right;
 }
 
 .keyBox {
@@ -77,3 +159,6 @@
 #map {
   height: 100%;
 }
+/* .nav-item:hover {
+  background-color: peru !important;
+} */
