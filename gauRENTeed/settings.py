@@ -45,8 +45,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'django.contrib.sites',
     'formtools',
-
 ]
 
 MIDDLEWARE = [
@@ -177,7 +177,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-SITE_ID = 3
+SITE_ID = 2
 # send to payment page...
 LOGIN_REDIRECT_URL = '/beta'
 LOGOUT_REDIRECT_URL = '/beta'
