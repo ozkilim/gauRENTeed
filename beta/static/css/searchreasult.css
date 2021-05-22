@@ -63,7 +63,7 @@
   padding: 20px;
   text-align: center;
   width: 280px;
-  height: 520px;
+  height: 100%;
   margin-right: 5px;
   margin-bottom: 5px;
   border-right: 10px;
@@ -82,7 +82,7 @@
   margin-bottom: 5px;
 
   width: 280px;
-  height: 400px;
+  height: 100%;
   border-right: 10px;
   float: left;
   overflow: hidden;
@@ -141,7 +141,7 @@
   max-width: 20%;
   height: auto;
   border-radius: 10px;
-  float: right;
+  float: left;
 }
 
 .keyBox {
