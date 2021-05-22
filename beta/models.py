@@ -88,13 +88,13 @@ class Review(models.Model):
     )
 
     BEDROOM_NUMBER_CHOICES = [
-        (1, 1), (2, 2,), (3, 2), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10)]
+        (1, 1), (2, 2,), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10)]
 
     bedroomNumber = models.IntegerField(
         choices=BEDROOM_NUMBER_CHOICES, default=3, help_text='How many bedrooms was the house? ')
 
     RATING_CHOICES = [
-        (1, 1), (2, 2,), (3, 2), (4, 4), (5, 5)
+        (1, 1), (2, 2,), (3, 3), (4, 4), (5, 5)
     ]
 
     overallRating = models.IntegerField(
