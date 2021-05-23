@@ -79,12 +79,6 @@
                 <h6>Value for money</h6>
                 {{ review.valueForMoney|yesno:"Yes,No" }}
 
-                
-
-                {% for i in review.valueForMoney|leftover %}
-                    <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star">
-                {% endfor %}
-                </div>
             </div>
     </div>
     <div id = "propertyDetails">
