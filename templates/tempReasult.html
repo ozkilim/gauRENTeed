@@ -9,7 +9,7 @@
       <div class="col-4">
         <h1>Review Timeline</h1>
         <img id="u251_img" class="u251_img" src={% static "images/onereasult/u250.png" %} />
-        <h4>Click on a review year to see what past tennants thaught</h4>
+        <h4>Click on a review year to see what past tennants thought</h4>
         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
             {% for review in reviews %}
             <!-- make newest tab show first..so make sure it comes through in correct order from db -->
@@ -77,12 +77,9 @@
             </div>
             <div class = "valueForMoney">
                 <h6>Value for money</h6>
-                <div class="keyBox">
+                {{ review.valueForMoney|yesno:"Yes,No" }}
 
-                {% for i in review.valueForMoney|times %}
-                <img src="{% static "images/search_results/u53.png" %}" class="Rating--Star">
-
-                {% endfor %}
+                
 
                 {% for i in review.valueForMoney|leftover %}
                     <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star">
@@ -96,7 +93,7 @@
         <h5>Property details</h5>
 
         <div class = "rent">
-            <h6>{{ review.rent }} $ per month</h6>
+            <h6>{{ review.rent }} £ per month</h6>
         </div>
         <div class= "bedroomNumber">
             <h6>{{ review.bedroomNumber }} bedrooms</h6>
@@ -148,7 +145,7 @@
                 </div>
             </div>            
             <div class = "building quality">
-                <h6>Buildingquality</h6>
+                <h6>Building quality</h6>
                 <div class="keyBox">
 
                 {% for i in review.buildingQuality|times %}
