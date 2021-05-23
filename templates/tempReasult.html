@@ -109,11 +109,7 @@
             <div class = "verified">
                 <h6>Verified review: {{ review.verified }}</h6>
             </div>
-            <div class = "livingConfirmation">
-                <h6> Confirmation of tennant living at this id_address: 
-                    {{ review.livingConfirmation|yesno:"Confirmed,Not confirmed" }}
-                    </h6>
-            </div>
+
             <div class = "occupation">
                 <h6>{{ review.occupation }}</h6>
             </div>
@@ -195,7 +191,7 @@
                 </div>
             </div>            
             <div class = "maintainanceComment">
-                <h6>Maintanance comments {{ review.maintainanceComment }}</h6>
+                <h6>Maintanance comments: {{ review.maintainanceComment }}</h6>
                 
             </div>
 
@@ -249,7 +245,7 @@
                 </div>
             </div>
             <div class = "landlordComment">
-                <h6>Land lord comment {{ review.landlordComment }}</h6>
+                <h6>Landlord comment: {{ review.landlordComment }}</h6>
             </div>
         </div>
 
