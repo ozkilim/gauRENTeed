@@ -1,0 +1,7 @@
+<form action="checkout" method="POST">
+    {% csrf_token %}
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key={{ stripe_key }} # Make sure to
+        wrap the variable name with double {} data-amount="200" data-name="GuaRENTeed" data-description="Review of... inser"
+        data-image="" data-currency="gbp">
+        </script>
+</form>

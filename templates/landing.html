@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/landing.css' %}">
+{% endblock %}
+
+{% block content %}
+<br>    
+
+<div class="landingback">
+<div class="row" >
+  <div class="col-12">
+        <h1 class ="landingTitle">guaRENTeed</h1>
+    <br>
+    <img class="u83_img" src={% static "images/landing/try2.jpg" %} />
+
+    <br>
+    <br>
+    <h2>See what <span class='boldLiving'>living</span> in your new home is going to be like.</h2>
+<br>
+            <!-- <h4 class="card-title">Find it!</h4> -->
+            <form action={% url 'landing' %} method="post" id="rearchForm">{% csrf_token %}
+              <input type="text" placeholder="Look up the address" id='property' name='property'>
+              <button type="submit" class="landingButton" form="rearchForm" value="Submit">Check!</button>
+            </form>
+
+      </div>
+
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>    <br>
+    <br>    <br>
+    
+    <!-- <h1>Renting is a big descision!</h1>
+    
+    <h1>The mission of our team is to ensure you know all the details about your future home</h1>
+    
+     -->
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+    <script>
+      $(function () {
+        $("#property").autocomplete({
+          source: '{% url 'landing' %}'
+        });
+      });
+    </script>
+
+
+
+  </div>
+
+</div>
+</div>
+  
+
+
+{% endblock %}

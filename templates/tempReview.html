@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1>leave a review to help others understand what they are in for when renting </h1>
+
+
+<form action="/beta/review" method="post">
+    {% csrf_token %}
+    <h1>property creation check</h1>
+    {{ propertyForm.as_p }}
+    <h1>review section</h1>
+    {{ form.as_p }}
+    {{ form.errors }}
+    <input type="submit" value="Submit">
+</form>
+
+
+
+<script type="text/javascript">
+  function initAutocomplete() {
+    // Create the autocomplete object, restricting the search to geographical
+    // location types.
+    autocomplete = new google.maps.places.Autocomplete(
+        /** @type {!HTMLInputElement} */(document.getElementById('id_address')),
+        {types: ['geocode']});
+
+    // When the user selects an address from the dropdown, populate the address
+    // fields in the form.
+    autocomplete.addListener('place_changed', fillInAddress);
+  }
+
+  function fillInAddress() {
+    // Get the place details from the autocomplete object.
+    var place = autocomplete.getPlace();
+
+
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlVTN-szxnm6ZMM8yWxZuuBIREfD8snjk&libraries=places&callback=initAutocomplete" async defer></script>
+
+{% endblock %}

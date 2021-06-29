@@ -1,0 +1,60 @@
+.u83_img {
+  width: 680px;
+}
+
+.card {
+  background-color: rgb(255, 235, 239);
+  border-radius: 15px;
+  color: black;
+  border-color: white;
+  color: black;
+}
+.ui-autocomplete-input {
+  border-radius: 5px;
+  background-color: white;
+  width: 530px;
+  height: 80px;
+  font-size: 25px;
+  vertical-align: middle;
+}
+
+.ui-autocomplete-input:hover {
+  box-shadow: 2px 0 10px -2px #888;
+}
+.ui-autocomplete-input::after {
+}
+
+.card:hover {
+  /* background-color: white; */
+  box-shadow: 2px 0 10px -2px #888;
+}
+.landingButton {
+  border-color: #f05c00;
+  border-radius: 5px;
+  height: 80px;
+  width: 150px;
+  font-size: 40px;
+  background-color: #f05c00;
+  vertical-align: middle;
+  color: #ffffff;
+}
+
+.landingButton:hover {
+  box-shadow: 2px 0 10px -2px #888;
+}
+.boldLiving {
+  font-weight: bolder;
+  text-decoration: underline;
+  color: rgb(79, 79, 79);
+}
+
+.landingTitle {
+  font-weight: bolder;
+  font-size: 110px;
+  color: #f05c00;
+  background-color: #ffffff;
+  padding: 20px;
+  padding-right: 20px;
+  text-align: left;
+  border-radius: 20px;
+}
