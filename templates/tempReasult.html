@@ -4,6 +4,132 @@
 {% load static %}
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/searchreasult.css' %}">
+<script src="https://js.stripe.com/v3/"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+<style>
+   
+
+form {
+  width: 100%;
+  min-width: 100%;
+  align-self: center;
+  box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
+    0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
+  border-radius: 7px;
+  padding: 40px;
+}
+input {
+  border-radius: 6px;
+  margin-bottom: 6px;
+  padding: 12px;
+  border: 1px solid rgba(50, 50, 93, 0.1);
+  height: 44px;
+  font-size: 16px;
+  width: 100%;
+  background: white;
+}
+.result-message {
+  line-height: 22px;
+  font-size: 16px;
+}
+.result-message a {
+  color: rgb(89, 111, 214);
+  font-weight: 600;
+  text-decoration: none;
+}
+.hidden {
+  display: none;
+}
+#card-error {
+  color: rgb(105, 115, 134);
+  text-align: left;
+  font-size: 13px;
+  line-height: 17px;
+  margin-top: 12px;
+}
+#card-element {
+  border-radius: 4px 4px 0 0 ;
+  padding: 12px;
+  border: 1px solid rgba(50, 50, 93, 0.1);
+  height: 44px;
+  width: 100%;
+  background: white;
+}
+#payment-request-button {
+  margin-bottom: 32px;
+}
+/* Buttons and links */
+button {
+  background: #5469d4;
+  color: #ffffff;
+  border-radius: 0 0 4px 4px;
+  border: 0;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: block;
+  transition: all 0.2s ease;
+  box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
+  width: 100%;
+}
+button:hover {
+  filter: contrast(115%);
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+/* spinner/processing state, errors */
+.spinner,
+.spinner:before,
+.spinner:after {
+  border-radius: 50%;
+}
+.spinner {
+  color: #ffffff;
+  font-size: 22px;
+  text-indent: -99999px;
+  margin: 0px auto;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  box-shadow: inset 0 0 0 2px;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+.spinner:before,
+.spinner:after {
+  position: absolute;
+  content: "";
+}
+.spinner:before {
+  width: 10.4px;
+  height: 20.4px;
+  background: #5469d4;
+  border-radius: 20.4px 0 0 20.4px;
+  top: -0.2px;
+  left: -0.2px;
+  -webkit-transform-origin: 10.4px 10.2px;
+  transform-origin: 10.4px 10.2px;
+  -webkit-animation: loading 2s infinite ease 1.5s;
+  animation: loading 2s infinite ease 1.5s;
+}
+.spinner:after {
+  width: 10.4px;
+  height: 10.2px;
+  background: #5469d4;
+  border-radius: 0 10.2px 10.2px 0;
+  top: -0.1px;
+  left: 10.2px;
+  -webkit-transform-origin: 0px 10.2px;
+  transform-origin: 0px 10.2px;
+  -webkit-animation: loading 2s infinite ease;
+  animation: loading 2s infinite ease;
+}
+
+    </style>
 {% endblock %}
 {% block content %}
 
@@ -11,7 +137,7 @@
 
 <!--Modal: Login / Register Form-->
 <div class="modal fade" id="loginPayModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document" style="max-width:90%;">
+    <div class="modal-dialog" role="document" style="max-width:50%;">
       <!--Content-->
       <div class="modal-content">
         <!--Modal cascading tabs-->
@@ -59,7 +185,6 @@
                     <strong>username or password not correct</strong>
                 </div>
                 {% endif %}
-              <!--Footer-->
               <div class="modal-footer">
                 <div class="options text-center text-md-right mt-1">
                   <p>Forgot <a href="#" class="blue-text">Password?</a></p>
@@ -67,421 +192,226 @@
               </div>
             </div>
         </div>
-            <!--/.Panel 7-->
-  
-            <!--Panel 8-->
+ 
+ 
 
             <div class="tab-pane fade" id="panel8" role="tabpanel">
   
-              <!--Body-->
-              <form id="userSignUp" method="POST">
 
-              <div class="modal-body">
-                <div class="md-form form-sm mb-5">
-                  <i class="fas fa-envelope prefix"></i>
-                  <input type="email" id="modalLRInput12" class="form-control form-control-sm validate">
-                  <label data-error="wrong" data-success="right" for="modalLRInput12">Your username</label>
-                </div>
-  
-                <div class="md-form form-sm mb-5">
-                  <i class="fas fa-lock prefix"></i>
-                  <input type="password" id="modalLRInput13" class="form-control form-control-sm validate">
-                  <label data-error="wrong" data-success="right" for="modalLRInput13">Your password</label>
-                </div>
-  
-                <div class="md-form form-sm mb-4">
-                  <i class="fas fa-lock prefix"></i>
-                  <input type="password" id="modalLRInput14" class="form-control form-control-sm validate">
-                  <label data-error="wrong" data-success="right" for="modalLRInput14">Repeat password</label>
-                </div>
-  
-                <div class="text-center form-sm mt-2">
-                </form>
+              <form id="payment-form" class="form-control">{% csrf_token %}
+                <input name = "email" type="text" id="email" placeholder="Email address" class="form-control"/>
+                <input name = "username" type="text" id="username" placeholder="username" class="form-control"/>
+                <input name = "password" type="text" id="password" placeholder="password" class="form-control"/>
 
-                  <form action="{% url 'checkout' %}" method="POST">
-                    
-                    {% csrf_token %}
-                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key={{ stripe_key }} # Make sure to
-                        wrap the variable name with double {} data-amount="200" data-name="GuaRENTeed" data-description="Review of... inser"
-                        data-image="" data-currency="gbp" data-email="{}">
-                        document.getElementById("userSignUp").submit();
+                <div id="card-element"></div>
+                <button id="submit">
+                  <div class="spinner hidden" id="spinner"></div>
+                  <span id="button-text">Pay now</span>
+                </button>
+                <p id="card-error" role="alert"></p>
+                <p class="result-message hidden">
+                </p>
+              </form>
+<script>
+const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+var stripe = Stripe("pk_test_51IVE74GfxvWHpljQiugUY1xG2FvOnO8l6W64sVuSofMJ5SHsVVlZ5E81bLsC1BwIWptV8BL2U4ZHhesrXOyOKcRH00SdJXIHfx");
+document.querySelector("button").disabled = true;
+fetch("{% url 'create-checkout-session' %}", {
+    method: "POST",
+    headers: {
+    'X-CSRFToken': csrftoken
+    }                
+    })
+    .then(function(result) {
+    return result.json();
+    })
+    .then(function(data) {
+    var elements = stripe.elements();
+    var style = {
+        base: {
+        color: "#32325d",
+        fontFamily: 'Arial, sans-serif',
+        fontSmoothing: "antialiased",
+        fontSize: "16px",
+        "::placeholder": {
+            color: "#32325d"
+        }
+        },
+        invalid: {
+        fontFamily: 'Arial, sans-serif',
+        color: "#fa755a",
+        iconColor: "#fa755a"
+        }
+    };
+    var card = elements.create("card", { style: style });
+    // Stripe injects an iframe into the DOM
+    card.mount("#card-element");
+    card.on("change", function (event) {
+        // Disable the Pay button if there are no card details in the Element
+        document.querySelector("button").disabled = event.empty;
+        document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
+    });
+    var form = document.getElementById("payment-form");
+    var formData = JSON.stringify($("payment-form").serializeArray());
 
-                        </script>
-                </form>
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        // Complete payment when the submit button is clicked
+        payWithCard(stripe, card, data.client_secret);
+        // Send for data back to the server
+        var formElement = document.querySelector("#payment-form");
+        var request = new XMLHttpRequest();
+        request.open("POST", "{% url 'checkout' %}");
+        console.log(formElement)
+        request.send(new FormData(formElement));
+
+        // Navigate to new view with data...
+    });
+
+});
+                
+
+// Calls stripe.confirmCardPayment
+// If the card requires authentication Stripe shows a pop-up modal to
+// prompt the user to enter authentication details without leaving your page.
+var payWithCard = function(stripe, card, clientSecret) {
+    loading(true);
+    stripe
+    .confirmCardPayment(clientSecret, {
+        payment_method: {
+        card: card
+        }
+    })
+    .then(function(result) {
+        if (result.error) {
+        // Show error to your customer
+        showError(result.error.message);
+        } else {
+        // The payment succeeded!
+        orderComplete(result.paymentIntent.id);
+        }
+    });
+};
+/* ------- UI helpers ------- */
+// Shows a success message when the payment is complete
+var orderComplete = function(paymentIntentId) {
+    loading(false);
+    document
+    .querySelector(".result-message a")
+    .setAttribute(
+        "href",
+        "https://dashboard.stripe.com/test/payments/" + paymentIntentId
+    );
+    document.querySelector(".result-message").classList.remove("hidden");
+    document.querySelector("button").disabled = true;
+};
+// Show the customer the error from Stripe if their card fails to charge
+var showError = function(errorMsgText) {
+    loading(false);
+    var errorMsg = document.querySelector("#card-error");
+    errorMsg.textContent = errorMsgText;
+    setTimeout(function() {
+    errorMsg.textContent = "";
+    }, 4000);
+};
+// Show a spinner on payment submission
+var loading = function(isLoading) {
+    if (isLoading) {
+    // Disable the button and show a spinner
+    document.querySelector("button").disabled = true;
+    document.querySelector("#spinner").classList.remove("hidden");
+    document.querySelector("#button-text").classList.add("hidden");
+    } else {
+    document.querySelector("button").disabled = false;
+    document.querySelector("#spinner").classList.add("hidden");
+    document.querySelector("#button-text").classList.remove("hidden");
+    }
+};
+            
+              </script>
+
                 </div>
   
               </div>
-              <!--Footer-->
               <div class="modal-footer">
                 <div class="options text-right">
                 </div>
               </div>
-            </div>
-            <!--/.Panel 8-->
-          </div>
-  
         </div>
-      </div>
-      <!--/.Content-->
-    </div>
-  </div>
-  <!--Modal: Login / Register Form-->
-  
 </div>
 </div>
-    {% endif %}
+</div>
 
-    <div class="row">
-      <div class="col-4">
-        <h1>Review Timeline</h1>
-        <img id="u251_img" class="u251_img" src={% static "images/onereasult/u250.png" %} />
-        <h4>Click on a review year to see what past tennants thought</h4>
-        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            {% for review in reviews %}
-            <!-- make newest tab show first..so make sure it comes through in correct order from db -->
-            <li class="nav-item">
-                <!-- find way to make newest tab active at start.. -->
-                <a class="nav-link" id={{review}} data-toggle="pill" href=#{{review.id}} role="tab"
-                    aria-controls={{review.id}} aria-selected="true">{{review.moveIn}} - {{review.moveOut}}</a>
-            </li>
-            {% endfor %}
-        </ul>
-    
-        <iframe
-            width="400"
-            height="450"
-            style="border:0"
-            loading="lazy"
-            allowfullscreen
-            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDlVTN-szxnm6ZMM8yWxZuuBIREfD8snjk
-                &q={{property.address}}">
-        </iframe>
-      </div>
-      <div class="col-8">
-        <div class ="aggregateValueDiv"><h4>Review timeline for {{property.address}}</h4>
-             <h6>
-            Average overall rating over all reviews of this property:
-            <div class="keyBox">
-            {% for i in aggregateReview|times %}
-                        <img src="{% static "images/search_results/u53.png" %}" class="Rating--Star">
-        
-                        {% endfor %}
-        
-                        {% for i in aggregateReview|leftover %}
-                            <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star">
-                        {% endfor %}
-            </div>
-            </h6>
-        </div>
+
+{% endif %}
+
+<div class="row">
+<div class="col-4">
+<h1>Review Timeline</h1>
+<img id="u251_img" class="u251_img" src={% static "images/onereasult/u250.png" %} />
+<h4>Click on a review year to see what past tennants thought</h4>
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    {% for review in reviews %}
+    <!-- make newest tab show first..so make sure it comes through in correct order from db -->
+    <li class="nav-item">
+        <!-- find way to make newest tab active at start.. -->
+        <a class="nav-link" id={{review}} data-toggle="pill" href=#{{review.id}} role="tab"
+            aria-controls={{review.id}} aria-selected="true">{{review.moveIn}} - {{review.moveOut}}</a>
+    </li>
+    {% endfor %}
+</ul>
+
+<iframe
+    width="400"
+    height="450"
+    style="border:0"
+    loading="lazy"
+    allowfullscreen
+    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDlVTN-szxnm6ZMM8yWxZuuBIREfD8snjk
+        &q={{property.address}}">
+</iframe>
+</div>
+<div class="col-8">
+<div class ="aggregateValueDiv"><h4>Review timeline for {{property.address}}</h4>
+        <h6>
+    Average overall rating over all reviews of this property:
+    <div class="keyBox">
+    {% for i in aggregateReview|times %}
+                <img src="{% static "images/search_results/u53.png" %}" class="Rating--Star">
+
+                {% endfor %}
+
+                {% for i in aggregateReview|leftover %}
+                    <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star">
+                {% endfor %}
+    </div>
+    </h6>
+</div>
+</div>  
         <hr>
 
 <div class="tab-content" id="pills-tabContent">
     {% for review in reviews %}
-    <div class="tab-pane" id={{review.id}} role="tabpanel" aria-labelledby={{review.id}}>
-    <div id = "overallDetials">
-        <img id="u250_img" class="u250_img" src={% static "images/review/u341.png" %} />
 
-            <div class = "overallRating">
-                <h5>Overall rating </h5>
 
-                <div class="keyBox">
-
-                {% for i in review.overallRating|times %}
-                <img src="{% static "images/search_results/u53.png" %}" class="Rating--Star">
-
-                {% endfor %}
-
-                {% for i in review.overallRating|leftover %}
-                    <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star">
-                {% endfor %}
-                </div>
-            </div>      
-            <div class = "recomendation">
-                <h6> Would you recomend this appartment to future renters??
-                    {{ review.recomendation|yesno:"Yes,No" }}
-                    </h6>
-            </div>
-            <div class = "valueForMoney">
-                <h6>Value for money</h6>
-                {{ review.valueForMoney|yesno:"Yes,No" }}
-
-            </div>
-    </div>
-    <div id = "propertyDetails">
-        <img id="u250_img" class="u250_img" src={% static "images/search/u11.png" %} />
-
-        <h5>Property details</h5>
-
-        <div class = "rent">
-            <h6>{{ review.rent }} £ per month</h6>
-        </div>
-        <div class= "bedroomNumber">
-            <h6>{{ review.bedroomNumber }} bedrooms</h6>
-        </div>
-    </div>    
-
-
-        <div id="validationOfReview">
-            <img id="u250_img" class="u250_img" src={% static "images/review/u338.png" %} />
-
-            <h5>Reviewer details</h5>
-
-            <div class = "firstName">
-                <h6>First name of reviewer: {{ review.firstName }}</h6>
-            </div>
-            <div class = "reviewDate">
-                <h6> Date of review: {{ review.reviewDate }}</h6>
-            </div>
-            <div class = "verified">
-                <h6>Verified review: {{ review.verified }}</h6>
-            </div>
-
-            <div class = "occupation">
-                <h6>{{ review.occupation }}</h6>
-            </div>
-        </div>
-
-        <div id = "maintainanceDetails">
-            <img id="u250_img" class="u250_img" src={% static "images/review/u314.png" %} />
-
-            <h5>Maintainance</h5>
-
-            <div class = "overallMaintainance">
-                <h6>Overall maintanance</h6>
-                <div class="keyBox">
-
-                {% for i in review.overallMaintainance|times %}
-                <img src="{% static "images/search_results/u53.png" %}" class="Rating--Star">
-
-                {% endfor %}
-
-                {% for i in review.overallMaintainance|leftover %}
-                    <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star">
-                {% endfor %}
-                </div>
-            </div>            
-            <div class = "building quality">
-                <h6>Building quality</h6>
-                <div class="keyBox">
-
-                {% for i in review.buildingQuality|times %}
-                <img src="{% static "images/search_results/u53.png" %}" class="Rating--Star">
-
-                {% endfor %}
-
-                {% for i in review.buildingQuality|leftover %}
-                    <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star">
-                {% endfor %}
-                </div>
-            </div>            
-            <div class = "furnishings">
-                <h6>Furnishings</h6>
-                <div class="keyBox">
-
-                {% for i in review.furnishings|times %}
-                <img src="{% static "images/search_results/u53.png" %}" class="Rating--Star">
-
-                {% endfor %}
-
-                {% for i in review.furnishings|leftover %}
-                    <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star">
-                {% endfor %}
-                </div>
-            </div>            
-            <div class = "water">
-                <h6>Water</h6>
-                <div class="keyBox">
-
-                {% for i in review.water|times %}
-                <img src="{% static "images/search_results/u53.png" %}" class="Rating--Star">
-
-                {% endfor %}
-
-                {% for i in review.water|leftover %}
-                    <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star">
-                {% endfor %}
-                </div>
-            </div>            
-            <div class = "whiteGoods">
-                <h6>White goods</h6>
-                <div class="keyBox">
-
-                {% for i in review.whiteGoods|times %}
-                <img src="{% static "images/search_results/u53.png" %}" class="Rating--Star">
-
-                {% endfor %}
-
-                {% for i in review.whiteGoods|leftover %}
-                    <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star">
-                {% endfor %}
-                </div>
-            </div>            
-            <div class = "maintainanceComment">
-                <h6>Maintanance comments: {{ review.maintainanceComment }}</h6>
-                
-            </div>
-
-        </div>
-
-        <div id = "landlordDetails">
-            <img id="u250_img" class="u250_img" src={% static "images/review/u356.png" %} />
-
-            <h5>Landlord</h5>
-
-            <div class = "overallLandlord">
-                <h6>Landloard</h6>
-                <div class="keyBox">
-
-                {% for i in review.overallLandlord|times %}
-                <img src="{% static "images/search_results/u53.png" %}" class="Rating--Star">
-
-                {% endfor %}
-
-                {% for i in review.overallLandlord|leftover %}
-                    <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star">
-                {% endfor %}
-                </div>
-            </div>
-            <div class = "responsiveness">
-                <h6>Responsiveness</h6>
-                <div class="keyBox">
-
-                {% for i in review.responsiveness|times %}
-                <img src="{% static "images/search_results/u53.png" %}" class="Rating--Star">
-
-                {% endfor %}
-
-                {% for i in review.responsiveness|leftover %}
-                    <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star">
-                {% endfor %}
-                </div>
-            </div>
-            <div class = "repairQuality">
-                <h6>Repair quality</h6>
-                <div class="keyBox">
-
-                {% for i in review.repairQuality|times %}
-                <img src="{% static "images/search_results/u53.png" %}" class="Rating--Star">
-
-                {% endfor %}
-
-                {% for i in review.repairQuality|leftover %}
-                    <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star">
-                {% endfor %}
-                </div>
-            </div>
-            <div class = "landlordComment">
-                <h6>Landlord comment: {{ review.landlordComment }}</h6>
-            </div>
-        </div>
-
-        <div id = "movingDetails">
-            <img id="u250_img" class="u250_img" src={% static "images/review/u336.png" %} />
-
-            <h5>Moving</h5>
-
-            <div class = "movingInExperiance">
-                <h6>Moving in experiance</h6>
-                <div class="keyBox">
-
-                {% for i in review.movingInExperiance|times %}
-                <img src="{% static "images/search_results/u53.png" %}" class="Rating--Star">
-
-                {% endfor %}
-
-                {% for i in review.movingInExperiance|leftover %}
-                    <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star">
-                {% endfor %}
-                </div>
-            </div>
-
-            <div class = "moveIn">
-                <h6>Move in date: {{ review.moveIn }}</h6>
-            </div>
-            <div class = "movingOutExperiance">
-                <h6>Moving out experiance</h6>
-                <div class="keyBox">
-
-                {% for i in review.movingOutExperiance|times %}
-                <img src="{% static "images/search_results/u53.png" %}" class="Rating--Star">
-
-                {% endfor %}
-
-                {% for i in review.movingOutExperiance|leftover %}
-                    <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star">
-                {% endfor %}
-                </div>
-            </div>
-            <div class = "moveOut">
-                <h6>Move out date: {{ review.moveOut }}</h6>
-            </div>
-        </div>
-
-            <div id = "areaDetails">
-                <img id="u250_img" class="u250_img" src={% static "images/onereasult/u91.png" %} />
-
-                <h5>Area</h5>
-
-            <div class = "areaSafety">
-                <h6>Area safety</h6>
-                <div class="keyBox">
-
-                {% for i in review.areaSafety|times %}
-                <img src="{% static "images/search_results/u53.png" %}" class="Rating--Star">
-
-                {% endfor %}
-
-                {% for i in review.areaSafety|leftover %}
-                    <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star">
-                {% endfor %}
-                </div>
-            </div>
-            <div class = "areaEnjoyment">
-                <h6>How enjoyable the area was to live in</h6>
-                <div class="keyBox">
-
-                {% for i in review.areaEnjoyment|times %}
-                <img src="{% static "images/search_results/u53.png" %}" class="Rating--Star">
-
-                {% endfor %}
-
-                {% for i in review.areaEnjoyment|leftover %}
-                    <img src="{% static "images/search_results/u52.png" %}" class="Rating--Star">
-                {% endfor %}
-                </div>
-            </div>
-            <div class = "areaEnjoymentReason">
-                <h6>{{ review.areaEnjoymentReason }}</h6>
-            </div>
-        </div>
-
-
-    </div>
- 
     {% endfor %}
 
-
 </div>
-</div>
+</div>  
 
-
-
-
-
-</div>
 
 <script>
     jQuery(function(){
        jQuery('.nav-link').click();
     });
-        </script>
-    {% if not user.is_authenticated %}
-        <script>
-            $(document).ready(function(){
-                $("#loginPayModal").modal('show');
-            });
-        </script>
-    {% endif %}
+</script>
+<script>
+    $(document).ready(function(){
+        $("#loginPayModal").modal('show');
+    });
+    </script>
+<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+
 
 {% endblock %}
 

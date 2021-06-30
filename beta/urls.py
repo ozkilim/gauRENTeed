@@ -2,7 +2,10 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from . import views
 from django.conf.urls import url
+from beta.views import (
+    CreateCheckoutSessionView,
 
+)
 
 urlpatterns = [
     path('', views.landing, name='landing'),
@@ -24,5 +27,8 @@ urlpatterns = [
     path('FormWizardView', views.FormWizardView, name='FormWizardView'),
     path('seeder', views.seeder, name='seeder'),
     path('checkout', views.checkout, name='checkout'),
+    path('create-checkout-session', CreateCheckoutSessionView.as_view(),
+         name='create-checkout-session')
+
 
 ]

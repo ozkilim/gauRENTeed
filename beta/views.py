@@ -27,6 +27,10 @@ from django.http import JsonResponse
 from formtools.wizard.views import SessionWizardView
 from django.utils.dateparse import parse_datetime
 import numpy as np
+from django.http import JsonResponse
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
+from django.views import View
 
 
 def landing(request):
@@ -63,7 +67,7 @@ def propertyList(request):
 def reasult(request, hashId):
     stripe.api_key = settings.STRIPE_SECRET_KEY
     # if not logged in or not payed then popup directly for payment  easily.
-    #context = {"stripe_key": settings.STRIPE_PUBLIC_KEY}
+    # context = {"stripe_key": settings.STRIPE_PUBLIC_KEY}
     # return render(request, "payment.html", context)
     # login popup then pay for login if not a user ..... all in modal..
     # Here decide if logged in...
@@ -217,39 +221,25 @@ def payment_form(request):
 
 
 def checkout(request):
-    print(list(request.POST.items()))
+    if request.method == 'POST':
+        email = request.POST["email"]
+        username = request.POST["username"]
+        password = request.POST["password"]
+        # Pull out all data from first form...
+        # Need some front end validation to ensure created object is correct.
+        newUser = CustomUser(username=username, password=password,
+                             email=email)
+        newUser.is_patient = True
+        newUser.is_active = True
+        newUser.save()
+        # Log this user in
+        # user = authenticate(request, username=username, password=password)
+        auth_login(request, newUser,
+                   backend='django.contrib.auth.backends.ModelBackend')
 
-    # Create new user here with passowrd and email....
-    review_purchased = ReviewProduct(
-        name="a review ",
-        year="10"
-    )
-
-    if request.method == "POST":
-        token = request.POST.get("stripeToken")
-        email = request.POST.get("stripeEmail")
-
-    try:
-        charge = stripe.Charge.create(
-            amount=200,
-            currency="gbp",
-            source=token,
-            description="The product charged to the user"
-        )
-        review_purchased.charge_id = charge.id
-
-    except stripe.error.CardError as ce:
-        print(ce)
-        return False, ce
-
-    else:
-        review_purchased.save()
-        # redirect to the review that was requested in real version
-        # log the new user in
-
-        return redirect("landing")
-        # The payment was successfully processed, the user's card was charged.
-        # You can now redirect the user to another page or whatever you want
+        # Sed email back to this email automatically with their deails so they do not forget
+        # Return to the page the user wanted....
+        return redirect('landing')  # TO THE LOACTION THE USER WANTED
 
 
 class FormWizardView(SessionWizardView):
@@ -292,7 +282,6 @@ def seeder(request):
         #     if row[i].isnan():
         #         print("cleaning")
         #         row[i] = None
-
         # CHANEE EMPTY FEILDS TO None... to be savec correctly....
 
         newReview = Review(
@@ -361,3 +350,17 @@ def seeder(request):
         )
 
         newReview.save()
+
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
+class CreateCheckoutSessionView(View):
+    def post(self, request, *args, **kwargs):
+        checkout_session = stripe.PaymentIntent.create(
+            amount=5000,
+            currency='usd',
+        )
+        return JsonResponse({
+            'client_secret': checkout_session['client_secret']
+        })

@@ -187,6 +187,7 @@ STRIPE_PUBLIC_KEY = "pk_test_51IVE74GfxvWHpljQiugUY1xG2FvOnO8l6W64sVuSofMJ5SHsVV
 
 STRIPE_SECRET_KEY = "sk_test_51IVE74GfxvWHpljQlqJi6BDKyBunvW9gxnF8NCFAc1RfoNsOmtsJvqaqabz5BDTyMLVSDQoOMDQbX6js4zGWdFHL00w2wzFMXT"
 
+STRIPE_WEBHOOK_SECRET = ""
 #  Add configuration for static files storage using whitenoise
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

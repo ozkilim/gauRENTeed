@@ -18,8 +18,7 @@ import hashlib
 import random
 import uuid
 
-
-# These are the objective facts about the property nearest station is added by us?... with logic..with google map api
+from django.db import models
 
 
 # Create your models here.
